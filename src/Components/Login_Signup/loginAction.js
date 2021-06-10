@@ -7,7 +7,7 @@ export const login = ({email, password}) => {
         password: password
     })
     .then((res) => {
-        console.log(res.data.token);
+        localStorage.token = res.data.token;
         return Promise.resolve();
     })
     .catch((err) => {
