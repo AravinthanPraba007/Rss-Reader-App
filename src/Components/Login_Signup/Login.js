@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { login } from './loginAction';
+import { login } from './performLogin';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../Contexts/AuthContext';
 
 function Login() {
     const history = useHistory();
     const initalLoginInput = {email : '', password : ''};
     const [loginInput, setLoginInput] = useState(initalLoginInput);
+    const [userAuthenticated, setUserAuthenticated] = useContext(AuthContext);
 
     function handleInputChange(event) {
         const key = event.target.id;
@@ -20,6 +22,7 @@ function Login() {
         login(loginInput)
         .then(() => {
             history.push('/home');
+            setUserAuthenticated(true);
         })
         .catch(() => {
             

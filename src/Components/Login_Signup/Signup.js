@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { signup } from './signupAction';
+import { signup } from './performSignup';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../Contexts/AuthContext';
 
 function Signup() {
     const history = useHistory();
     const initalSignupInput = {name: '', email : '', password : ''};
     const [signupInput, setSignupInput] = useState(initalSignupInput);
+    const [userAuthenticated, setUserAuthenticated] = useContext(AuthContext);
 
     function handleInputChange(event) {
         const key = event.target.id;
@@ -20,6 +22,7 @@ function Signup() {
         signup(signupInput)
         .then(() => {
             history.push('/home');
+            setUserAuthenticated(true);
         })
         .catch(() => {
             

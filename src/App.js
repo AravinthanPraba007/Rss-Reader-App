@@ -5,20 +5,31 @@ import Login from './Components/Login_Signup/Login';
 import Signup from './Components/Login_Signup/Signup';
 import Header from './Components/HomePage/Header';
 import UserDashboard from './Components/UserDashBoard/UserDashboard';
+import ProtectedRoute from './Helpers/ProtectedRoute';
+import Discover from './Components/UserDashBoard/Discover';
+import UserSubscriptions from './Components/UserDashBoard/UserSubscriptions';
+import Feed from './Components/UserDashBoard/Feed';
+import { AuthProvider } from './Contexts/AuthContext';
+
 
 function App() {
     return (
         <div>
-             <BrowserRouter>
+            <BrowserRouter>
+            <AuthProvider>
             <Header/>
             <div style={{paddingTop: '56px'}}>
             <Switch>
                 <Route path="/" component={HomePage} exact />
                 <Route path="/login" component={Login} />
                 <Route path="/signup" component={Signup} />
-                <Route path="/home" component={UserDashboard} />
+                <ProtectedRoute path="/home" component={UserDashboard} exact/>
+                <ProtectedRoute path="/discover" component={Discover} />
+                <ProtectedRoute path="/subscriptions" component={UserSubscriptions} />
+                <ProtectedRoute path="/feed" component={Feed} />
             </Switch>
             </div>
+            </AuthProvider>
             </BrowserRouter>
         </div>
     )

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../Contexts/AuthContext';
+import { logout } from '../Login_Signup/performLogout';
 
 function Header() {
     const history = useHistory();
+    const [userAuthenticated, setUserAuthenticated] = useContext(AuthContext);
+    console.log(userAuthenticated);
     return (
         <div>
             <Navbar collapseOnSelect fixed="top" expand="sm" bg="light" variant="light">
@@ -11,11 +15,21 @@ function Header() {
                     <Navbar.Brand href="/">Rss Reader</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
+                    {!userAuthenticated &&
                         <Nav className="me-auto">
                             <Nav.Link onClick={() => history.push('/')} >Home</Nav.Link>
                             <Nav.Link onClick={() => history.push('/login')}>Login</Nav.Link>
                             <Nav.Link onClick={() => history.push('/signup')}>SignUp</Nav.Link>
-                        </Nav>
+                            </Nav>
+                             }
+                    {userAuthenticated && 
+                    <Nav className="me-auto">
+                    <Nav.Link onClick={() => history.push('/home')} >Home</Nav.Link>
+                    <Nav.Link onClick={() => history.push('/discover')}>Discover</Nav.Link>
+                    <Nav.Link onClick={() => history.push('/subscriptions')}>Subscriptions</Nav.Link>
+                    <Nav.Link onClick={() => logout(history, setUserAuthenticated)}>Logout</Nav.Link>
+                    </Nav>
+                    }
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
