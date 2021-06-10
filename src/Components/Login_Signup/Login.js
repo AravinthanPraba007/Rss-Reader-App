@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { login } from './loginAction';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
+    const history = useHistory();
     const initalLoginInput = {email : '', password : ''};
     const [loginInput, setLoginInput] = useState(initalLoginInput);
 
@@ -15,7 +17,13 @@ function Login() {
 
     function handleLoginSubmit(event) {
         event.preventDefault();
-        login(loginInput);
+        login(loginInput)
+        .then(() => {
+            history.push('/home');
+        })
+        .catch(() => {
+            
+        })
     }
 
     return (
