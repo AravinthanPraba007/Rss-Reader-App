@@ -1,4 +1,4 @@
-import axiosInstance from "../../Helpers/axiosInstance"
+import axiosInstance from "../Helpers/axiosInstance"
 
 export const signup = ({name, email, password}) => {
 

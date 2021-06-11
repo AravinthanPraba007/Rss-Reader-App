@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
-import { addRssSubscription } from './addRssSubscription';
+import { addRssSubscription } from '../../Services/addRssSubscription';
 
 function RssSite(props) {
     const [subscriptionMessage, setsubscriptionMessage] = useState('');

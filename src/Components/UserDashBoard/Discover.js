@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Jumbotron, Row } from 'react-bootstrap'
 import RssSite from '../RssSites/RssSite'
 import { useHistory } from 'react-router-dom';
-import { fetchRssSites } from './fetchRssSite';
+import { fetchRssSites } from '../../Services/fetchRssSite';
 
 
 function Discover() {

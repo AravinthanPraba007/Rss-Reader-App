@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Jumbotron, Col, Row, Button } from 'react-bootstrap'
 import RssSite from '../RssSites/RssSite'
 import { useHistory } from 'react-router-dom';
-import { fetchUserSubscription } from './fetchUserSubscriptions';
+import { fetchUserSubscription } from '../../Services/fetchUserSubscriptions';
 
 
 function UserSubscriptions() {

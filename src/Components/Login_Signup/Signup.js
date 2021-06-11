@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { signup } from './performSignup';
+import { signup } from '../../Services/performSignup';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext';
 

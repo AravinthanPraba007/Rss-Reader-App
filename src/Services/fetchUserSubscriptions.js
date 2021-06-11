@@ -1,4 +1,4 @@
-import axiosInstance from "../../Helpers/axiosInstance";
+import axiosInstance from "../Helpers/axiosInstance";
 
 export const fetchUserSubscription = (params) => {
     return axiosInstance().get("/getRssSubscriptionList")

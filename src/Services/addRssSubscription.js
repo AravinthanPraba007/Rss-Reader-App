@@ -1,4 +1,4 @@
-import axiosInstance from "../../Helpers/axiosInstance";
+import axiosInstance from "../Helpers/axiosInstance";
 
 export const addRssSubscription = (rssFeedUrl) => {
     return axiosInstance().post("/addRssSubscription",{

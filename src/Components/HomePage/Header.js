@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext';
-import { logout } from '../Login_Signup/performLogout';
+import { logout } from '../../Services/performLogout';
 
 function Header() {
     const history = useHistory();

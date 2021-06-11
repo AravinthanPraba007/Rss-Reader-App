@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import RssSiteFeed from '../RssSites/RssSiteFeed';
-import {Link, useLocation} from "react-router-dom";
-import { fetchRssSiteFeeds } from './fetchRssSiteFeed';
+import {useLocation} from "react-router-dom";
+import { fetchRssSiteFeeds } from '../../Services/fetchRssSiteFeed';
 import { CardColumns } from 'react-bootstrap';
-import RssSiteFeedList from '../RssSites/RssSiteFeedList';
 
 function Feed() {
     const history = useHistory();
