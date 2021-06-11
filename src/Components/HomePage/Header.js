@@ -7,7 +7,6 @@ import { logout } from '../../Services/performLogout';
 function Header() {
     const history = useHistory();
     const [userAuthenticated, setUserAuthenticated] = useContext(AuthContext);
-    console.log(userAuthenticated);
     return (
         <div>
             <Navbar collapseOnSelect fixed="top" expand="sm" bg="light" variant="light">

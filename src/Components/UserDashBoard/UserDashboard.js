@@ -11,12 +11,16 @@ function UserDashboard() {
             </Jumbotron>
             </div>
            <div className="text-center">
+           <div>
            <Button className="mb-4 mt-4" variant="info" size="lg" active onClick={() => history.push('/subscriptions')}>
                    Manage your Rss Site Subscription!!
             </Button>
+            </div>
+            <div>
            <Button className="mb-4 mt-4" variant="success" size="lg" active onClick={() => history.push('/discover')}>
                    Want to explore Rss Sites!!
             </Button>
+            </div>
            </div>
             <div>
                 

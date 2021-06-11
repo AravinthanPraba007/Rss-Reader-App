@@ -9,11 +9,11 @@ export const signup = ({name, email, password}) => {
     })
     .then((res) => {
         localStorage.token = res.data.token;
-        return Promise.resolve();
+        return Promise.resolve(res);
     })
     .catch((err) => {
         console.log(err);
-        return Promise.reject();
+        return Promise.reject(err);
     })
     
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Jumbotron, Col, Row, Button } from 'react-bootstrap'
+import { Jumbotron, Col, Row, Button, Spinner } from 'react-bootstrap'
 import RssSite from '../RssSites/RssSite'
 import { useHistory } from 'react-router-dom';
 import { fetchUserSubscription } from '../../Services/fetchUserSubscriptions';
@@ -8,10 +8,13 @@ import { fetchUserSubscription } from '../../Services/fetchUserSubscriptions';
 function UserSubscriptions() {
     const history = useHistory();
     const [subcriptionList, setSubcriptionList] = useState([]);
+    const [userSubscriptionloading, setUserSubscriptionLoading] = useState(true);
     useEffect(() => {
+        setUserSubscriptionLoading(true);
         fetchUserSubscription()
             .then((data) => {
                 setSubcriptionList(data);
+                setUserSubscriptionLoading(false)
             })
     }, [])
     return (
@@ -19,7 +22,11 @@ function UserSubscriptions() {
             <Jumbotron className="text-center">
                 Your Subscriptions
             </Jumbotron>
-           
+            {userSubscriptionloading && 
+                <div className="text-center mt-5">
+                    <Spinner animation="border" /><span>Loading your subscription</span>
+                    </div>
+            }
             {subcriptionList.length >0 &&
                 <div className="text-center">
                     <Row xs={1} md={2} className="g-4">

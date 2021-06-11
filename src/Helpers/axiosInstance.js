@@ -14,5 +14,22 @@ export default (params) => {
         headers: headers
     });
 
+    axiosInstance.interceptors.response.use(
+        (response) => {
+            console.log(response)
+            return Promise.resolve(response);
+       },
+        (error) => {
+          if (error.response.status === 401) {
+            localStorage.removeItem("token");
+          }
+          if (error) {
+            // console.log(error);
+            // console.log(error.response);
+            // console.log(error.response.data.message);
+            return Promise.reject(error.response);
+        }
+        }
+    )
     return axiosInstance;
 }

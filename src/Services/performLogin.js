@@ -7,12 +7,13 @@ export const login = ({email, password}) => {
         password: password
     })
     .then((res) => {
+        console.log(res);
         localStorage.token = res.data.token;
-        return Promise.resolve();
+        return Promise.resolve(res);
     })
     .catch((err) => {
         console.log(err);
-        return Promise.reject();
+        return Promise.reject(err);
     })
     
 }

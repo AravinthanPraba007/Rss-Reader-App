@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Jumbotron, Row } from 'react-bootstrap'
+import { Col, Jumbotron, Row, Spinner } from 'react-bootstrap'
 import RssSite from '../RssSites/RssSite'
 import { useHistory } from 'react-router-dom';
 import { fetchRssSites } from '../../Services/fetchRssSite';
@@ -8,10 +8,16 @@ import { fetchRssSites } from '../../Services/fetchRssSite';
 function Discover() {
     const history = useHistory();
     const [rssSites, setRssSites] = useState([]);
+    const [rssSitesloading, setRssSitesLoading] = useState(true);
     useEffect(() => {
+        setRssSitesLoading(true);
         fetchRssSites()
         .then((data) => {
             setRssSites(data);
+            setRssSitesLoading(false);
+        })
+        .catch((err) =>{
+            
         })
     }, [])
     return (
@@ -19,6 +25,12 @@ function Discover() {
             <Jumbotron className="text-center">
                 Discover Rss Sites
             </Jumbotron>
+
+            {rssSitesloading && 
+                <div className="text-center mt-5">
+                    <Spinner animation="border" /><span>Fetching Rss Sites</span>
+                    </div>
+            }
             
             <div className="text-center">
            <Row xs={1} md={2} className="g-4">
