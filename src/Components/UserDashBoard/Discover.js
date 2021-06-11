@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Jumbotron, Row } from 'react-bootstrap'
 import RssSite from '../RssSites/RssSite'
 import { useHistory } from 'react-router-dom';
 import { fetchRssSites } from './fetchRssSite';
@@ -16,7 +16,10 @@ function Discover() {
     }, [])
     return (
         <div>
-            Discover Rss Sites
+            <Jumbotron className="text-center">
+                Discover Rss Sites
+            </Jumbotron>
+            
             <div className="text-center">
            <Row xs={1} md={2} className="g-4">
                {rssSites.map((rssSite, index) => (

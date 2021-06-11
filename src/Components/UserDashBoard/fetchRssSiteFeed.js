@@ -5,7 +5,6 @@ export const fetchRssSiteFeeds = (rssFeedUrl) => {
         rssFeedUrl: rssFeedUrl
     })
     .then((res) => {
-        console.log(res.data);
         return Promise.resolve(res.data.rssSiteFeeds);
     })
     .catch((err) => {

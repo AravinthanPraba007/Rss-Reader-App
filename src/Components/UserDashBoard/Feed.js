@@ -4,6 +4,7 @@ import RssSiteFeed from '../RssSites/RssSiteFeed';
 import {Link, useLocation} from "react-router-dom";
 import { fetchRssSiteFeeds } from './fetchRssSiteFeed';
 import { CardColumns } from 'react-bootstrap';
+import RssSiteFeedList from '../RssSites/RssSiteFeedList';
 
 function Feed() {
     const history = useHistory();
@@ -21,12 +22,14 @@ function Feed() {
             if (isSubscribed) {
             setRssSiteFeeds(data);
             }
+            
         })
         return () =>isSubscribed = false
     }, [])
     return (
         <div>
-            {rssSiteFeeds.map((rssSiteFeed, index) => (
+        {rssSiteFeeds &&             
+            rssSiteFeeds.map((rssSiteFeed, index) => (
             <CardColumns key={index}>
                 <RssSiteFeed
                 title = {rssSiteFeed.title}
@@ -35,8 +38,9 @@ function Feed() {
                 summary = {rssSiteFeed.summary}
                 ></RssSiteFeed>
             </CardColumns>
-            ))}
-        </div>
+            ))
+            }
+            </div>
     )
 }
 

@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
+import { addRssSubscription } from './addRssSubscription';
 
 function RssSite(props) {
+    const [subscriptionMessage, setsubscriptionMessage] = useState('');
+    
+    function handleSubscribe(){
+        addRssSubscription(props.url)
+        .then((res) => {
+            setsubscriptionMessage(res);
+        })
+        .catch((error) => {
+
+        })
+    }
 
     return (
         <div>
@@ -22,6 +34,15 @@ function RssSite(props) {
                     >
                         <Button variant="primary">Click to Check the feeds</Button>
                     </Link>
+                    {!props.fromSubscriptionlist &&
+                    <>
+                    {!subscriptionMessage && 
+                    <Button className="my-2" variant="success" onClick={() => handleSubscribe()}> Subscribe</Button>
+                    }
+                    {subscriptionMessage && 
+                        <span className="badge bg-success my-2"> {subscriptionMessage} </span>}
+                    </>
+                    }
                 </Card.Body>
             </Card>
         </div>
