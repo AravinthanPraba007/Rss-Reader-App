@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import RssSiteFeed from '../RssSites/RssSiteFeed';
 import {useLocation} from "react-router-dom";
 import { fetchRssSiteFeeds } from '../../Services/fetchRssSiteFeed';
-import { CardColumns, Spinner } from 'react-bootstrap';
+import { Col, Row, Spinner, Container } from 'react-bootstrap';
 
 function Feed() {
     const history = useHistory();
@@ -30,24 +30,28 @@ function Feed() {
         return () =>isSubscribed = false
     }, [])
     return (
-        <div>
+        <div className="mt-4">
+             <Container fluid="sm">
             {feedsloading && 
                 <div className="text-center mt-5">
                     <Spinner animation="border" /><span>Fetching your feed</span>
                     </div>
             }
+            <Row xs={1} sm={1} md={2} lg={3} >
         {rssSiteFeeds &&             
             rssSiteFeeds.map((rssSiteFeed, index) => (
-            <CardColumns key={index}>
+                <Col  key={index} className="mb-4">
                 <RssSiteFeed
                 title = {rssSiteFeed.title}
                 description = {rssSiteFeed.description}
                 link = {rssSiteFeed.link}
                 summary = {rssSiteFeed.summary}
                 ></RssSiteFeed>
-            </CardColumns>
+            </Col>
             ))
             }
+            </Row>
+            </Container>
             </div>
     )
 }

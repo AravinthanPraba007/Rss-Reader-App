@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Jumbotron, Row, Spinner } from 'react-bootstrap'
+import { Col, Jumbotron, Row, Spinner, Container } from 'react-bootstrap'
 import RssSite from '../RssSites/RssSite'
 import { useHistory } from 'react-router-dom';
 import { fetchRssSites } from '../../Services/fetchRssSite';
@@ -22,10 +22,11 @@ function Discover() {
     }, [])
     return (
         <div>
+           
             <Jumbotron className="text-center">
                 Discover Rss Sites
             </Jumbotron>
-
+            <Container fluid="sm">
             {rssSitesloading && 
                 <div className="text-center mt-5">
                     <Spinner animation="border" /><span>Fetching Rss Sites</span>
@@ -33,9 +34,10 @@ function Discover() {
             }
             
             <div className="text-center">
-           <Row xs={1} md={2} className="g-4">
+               
+           <Row xs={1} sm={1} md={2} lg={3} >
                {rssSites.map((rssSite, index) => (
-                   <Col key={index}>
+                   <Col  key={index} className="mb-4">
                     <RssSite 
                     title={rssSite.title} 
                     description={rssSite.description} 
@@ -47,6 +49,7 @@ function Discover() {
                ))}
                </Row>
            </div>
+           </Container>
         </div>
     )
 }

@@ -18,7 +18,7 @@ function RssSite(props) {
 
     return (
         <div>
-            <Card style={{ width: '18rem' }}>
+            <Card>
                 <Card.Img variant="top" src={(props.imageUrl) ? props.imageUrl : "https://static.dw.com/image/15689691_101.jpg"} />
                 <Card.Body>
                     <Card.Title>{props.title}</Card.Title>
