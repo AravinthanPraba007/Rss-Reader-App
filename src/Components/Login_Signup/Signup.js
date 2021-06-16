@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Alert, Button, Form } from 'react-bootstrap'
+import { Alert, Button, Form, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { signup } from '../../Services/performSignup';
 import { useHistory } from 'react-router-dom';
@@ -63,7 +63,8 @@ function Signup() {
     }
 
     return (
-        <div>
+        <div className="mt-5">
+        <Container fluid="sm">
             <h3>Sign Up</h3>
             {errorMessage &&
                 <Alert variant="warning">
@@ -91,10 +92,11 @@ function Signup() {
                     type="submit"
                     disabled={signupTriggered}
                     onClick={handleSignupSubmit}>
-                    Submit
+                    Signup
                 </Button>
                 <p>Already have an account? <Link to="/login">Login</Link></p>
             </Form>
+            </Container>
         </div>
     )
 }

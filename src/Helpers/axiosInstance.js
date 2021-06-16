@@ -1,7 +1,6 @@
 import axios from "axios"
 
-export default (params) => {
-    
+export default () => {
     const baseURL = "http://localhost:8080";
     let headers = {};
 
@@ -22,6 +21,7 @@ export default (params) => {
         (error) => {
           if (error.response.status === 401) {
             localStorage.removeItem("token");
+            window.location.href = '/login';
           }
           if (error) {
             // console.log(error);
