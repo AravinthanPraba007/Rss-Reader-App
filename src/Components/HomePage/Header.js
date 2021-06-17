@@ -11,7 +11,10 @@ function Header() {
         <div>
             <Navbar collapseOnSelect fixed="top" expand="sm" bg="light" variant="light">
                 <Container>
-                    <Navbar.Brand href="/">Rss Reader</Navbar.Brand>
+                    <Navbar.Brand onClick={() => {
+                        userAuthenticated? history.push('/home') : history.push('/')}
+                    }
+                        >Rss Reader</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     {!userAuthenticated &&

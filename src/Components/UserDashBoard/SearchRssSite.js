@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Alert, Button, Col, Form, Row, Spinner } from 'react-bootstrap'
+import { Alert, Button, Col, Form, Row, Spinner, Container } from 'react-bootstrap'
 import { useHistory } from 'react-router';
 import { searchRssSite } from '../../Services/searchRssSite';
 import RssSite from '../RssSites/RssSite';
 
-function SearchRssSite() {
+function    SearchRssSite() {
 
     const history = useHistory();
     const initalSearchInput = { rssFeedUrl: '' };
@@ -60,7 +60,7 @@ function SearchRssSite() {
                 })
                 .catch((err) => {
                     setSearchTriggered(false);
-                    setErrorMessage(err.data.message);
+                    setErrorMessage("Search error : "+err.data.message);
                     
                 })
         }
@@ -72,19 +72,20 @@ function SearchRssSite() {
 
     return (
         <div>
-
+            <Container fluid="sm">
             <Form noValidate onSubmit={handleSearch}>
+            
+                <Row xs={1} sm={1} md={2} lg={2}>
+                    <Col lg="10" md="10">
                 <Form.Group className="mb-3" controlId="rssFeedUrl">
-                    <Form.Label>
-                        <h3>Search your favorite Rss Site</h3>
-                    </Form.Label>
-                    {errorMessage &&
-                        <Alert variant="warning">
-                            {errorMessage}
-                        </Alert>
-                    }
+                    {/* <Form.Label>
+                        Search your favorite Rss Site
+                    </Form.Label> */}
+                    
                     <Form.Control type="text" onChange={handleInputChange} placeholder="Enter the Rss Site URL" value={searchInput.rssFeedUrl} />
                 </Form.Group>
+                </Col>
+                <Col lg="2" md="1">
                 <Button
                     variant="primary"
                     type="submit"
@@ -92,8 +93,14 @@ function SearchRssSite() {
                 >
                     Search
                 </Button>
+                </Col>
+                </Row>
             </Form>
-
+            {errorMessage &&
+                        <Alert className="mt-3" variant="warning">
+                            {errorMessage}
+                        </Alert>
+                    }
 
             {searchTriggered &&
                 <div className="text-center mt-5">
@@ -103,6 +110,7 @@ function SearchRssSite() {
 
             {rssSite.isloaded && 
                 <div className="text-center mt-3">
+                    <h6>Search Result</h6>
                 <RssSite 
                 title={rssSite.title} 
                 description={rssSite.description} 
@@ -112,7 +120,7 @@ function SearchRssSite() {
                 </RssSite>
                 </div>
             }
-            
+            </Container>
 
         </div>
     )
