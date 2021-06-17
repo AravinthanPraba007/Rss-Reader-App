@@ -32,7 +32,7 @@ function UserFeed() {
                         <Spinner animation="border" /><span>Fetching your feed</span>
                     </div>
                 }
-                <Row xs={1} sm={1} md={2} lg={3} className="mt-3">
+                
                     {(!userFeeds || !userFeeds.length > 0) &&
                         <div className="text-center">
                             <h2 className="my-2">You have not subscribed to any of the feed</h2>
@@ -48,9 +48,8 @@ function UserFeed() {
                     }
                     {(userFeeds && userFeeds.length > 0) && <div>
                         <h3 className="text-center">Check out your Recent Feeds</h3>
+                        <Row xs={1} sm={1} md={2} lg={3} className="mt-3">
                         {userFeeds.map((rssSiteFeed, index) => (
-
-
                             <Col key={index} className="mb-4">
                                 <RssSiteFeed
                                     title={rssSiteFeed.title}
@@ -61,9 +60,10 @@ function UserFeed() {
                             </Col>
 
                         ))}
+                        </Row>
                     </div>
                     }
-                </Row>
+                
             </Container>
         </div>
     )

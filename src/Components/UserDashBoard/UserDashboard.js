@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, Jumbotron, Container, Row, Col } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom';
-import SearchRssSite from './SearchRssSite';
 import UserFeed from './UserRecentFeed';
 function UserDashboard() {
     const history = useHistory();
@@ -33,9 +32,7 @@ function UserDashboard() {
 
 
 
-                <div className="mx-4">
-                    <SearchRssSite></SearchRssSite>
-                </div>
+               
             </div>
             <div>
                 <UserFeed></UserFeed>

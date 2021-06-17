@@ -3,7 +3,7 @@ import { Col, Jumbotron, Row, Spinner, Container } from 'react-bootstrap'
 import RssSite from '../RssSites/RssSite'
 import { useHistory } from 'react-router-dom';
 import { fetchRssSites } from '../../Services/fetchRssSite';
-
+import SearchRssSite from './SearchRssSite';
 
 function Discover() {
     const history = useHistory();
@@ -26,6 +26,10 @@ function Discover() {
             <Jumbotron className="text-center">
                 Discover Rss Sites
             </Jumbotron>
+            
+            <div className="my-4 text-center">
+                    <SearchRssSite></SearchRssSite>
+            </div>
             <Container fluid="sm">
             {rssSitesloading && 
                 <div className="text-center mt-5">
@@ -33,9 +37,10 @@ function Discover() {
                     </div>
             }
             
+            {!rssSitesloading && 
             <div className="text-center">
-               
-           <Row xs={1} sm={1} md={2} lg={3} >
+               <h4>Available Rss Sites</h4>
+           <Row xs={1} sm={1} md={2} lg={3} className="mt-3" >
                {rssSites.map((rssSite, index) => (
                    <Col  key={index} className="mb-4">
                     <RssSite 
@@ -49,6 +54,7 @@ function Discover() {
                ))}
                </Row>
            </div>
+}
            </Container>
         </div>
     )
