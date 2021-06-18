@@ -5,7 +5,7 @@ export const fetchUserFeeds = (page) => {
         page: page
     })
     .then((res) => {
-        return Promise.resolve(res.data.feeds.rows);
+        return Promise.resolve(res.data.feeds);
     })
     .catch((err) => {
         console.log(err);

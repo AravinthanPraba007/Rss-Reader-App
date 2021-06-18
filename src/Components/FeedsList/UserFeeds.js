@@ -1,26 +1,50 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import RssSiteFeed from '../RssSites/RssSiteFeed';
-import { Col, Row, Spinner, Container, Button } from 'react-bootstrap';
+import { Col, Row, Spinner, Container, Button, Alert } from 'react-bootstrap';
 import { fetchUserFeeds } from '../../Services/fetchUserFeed';
 
-function UserFeed() {
+function UserFeeds() {
     const history = useHistory();
     const [userFeeds, setUserFeeds] = useState([]);
     const [feedsloading, setFeedsLoading] = useState(true);
-    const page = 1;
+    const [page, setPage] = useState(1);
+    const [maximumPage, setMaximumPage] = useState(1);
     useEffect(() => {
-        let isSubscribed = true
         setFeedsLoading(true);
         fetchUserFeeds(page)
             .then((data) => {
-                if (isSubscribed) {
-                    setUserFeeds(data.rows);
-                }
+                setUserFeeds(data.rows);
+                let maxPageCount = Math.ceil((data.count)/10);
+                setMaximumPage(maxPageCount);
                 setFeedsLoading(false);
             })
-        return () => isSubscribed = false
+        
     }, [])
+
+
+    function handleFetchPrevFeeds(){
+        let pageNo = page-1;
+        setPage(pageNo);
+        setFeedsLoading(true);
+        
+        fetchUserFeeds(pageNo)
+            .then((data) => {
+                setUserFeeds(data.rows);
+                setFeedsLoading(false);
+            })
+    }
+
+    function handleFetchNextFeeds(){
+        let pageNo = page+1;
+        setPage(pageNo);
+        setFeedsLoading(true);
+        fetchUserFeeds(pageNo)
+            .then((data) => {
+                setUserFeeds(data.rows);
+                setFeedsLoading(false);
+            })
+    }
 
     return (
         <div className="mt-4">
@@ -65,14 +89,13 @@ function UserFeed() {
                     }
                 
             </Container>
-            <div className="text-center">
-            <Button variant="success" size="lg" active onClick={() => history.push('/userfeeds')}>
-                                    Want to explore More Feeds!!
-                                </Button>
+            <div className="text-center my-3">
+            <Button className="my-2" disabled = {(page == 1)} variant="success" onClick={() => handleFetchPrevFeeds()}> Prev</Button>
+            <span className="mx-3">Page :{page} / {maximumPage}</span>
+            <Button className="my-2" disabled = {(page == maximumPage)} variant="success" onClick={() => handleFetchNextFeeds()}> Next</Button>
             </div>
-            
         </div>
     )
 }
 
-export default UserFeed
+export default UserFeeds

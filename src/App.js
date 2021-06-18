@@ -10,6 +10,7 @@ import Discover from './Components/UserDashBoard/Discover';
 import UserSubscriptions from './Components/UserDashBoard/UserSubscriptions';
 import Feed from './Components/UserDashBoard/Feed';
 import { AuthProvider } from './Contexts/AuthContext';
+import UserFeeds from './Components/FeedsList/UserFeeds';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                 <ProtectedRoute path="/discover" component={Discover} />
                 <ProtectedRoute path="/subscriptions" component={UserSubscriptions} />
                 <ProtectedRoute path="/feed" component={Feed} />
+                <ProtectedRoute path="/userfeeds" component={UserFeeds} />
             </Switch>
             </div>
             </AuthProvider>
