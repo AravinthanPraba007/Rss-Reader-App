@@ -78,9 +78,9 @@ function    SearchRssSite() {
                 <Row xs={1} sm={1} md={2} lg={2}>
                     <Col lg="10" md="10">
                 <Form.Group className="mb-3" controlId="rssFeedUrl">
-                    <Form.Label>
+                    {/* <Form.Label>
                         <h4>Search your favorite Rss Site</h4>
-                    </Form.Label>
+                    </Form.Label> */}
                     
                     <Form.Control type="text" onChange={handleInputChange} placeholder="Enter the Rss Site URL" value={searchInput.rssFeedUrl} />
                 </Form.Group>

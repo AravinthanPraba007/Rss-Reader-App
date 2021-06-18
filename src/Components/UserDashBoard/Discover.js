@@ -48,6 +48,8 @@ function Discover() {
                     description={rssSite.description} 
                     imageUrl={rssSite.imageUrl}
                     url={rssSite.url}
+                    rssId ={rssSite.id}
+                    fromDiscoverlist = "true"
                     >   
                     </RssSite>
                    </Col>

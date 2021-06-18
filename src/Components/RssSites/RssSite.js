@@ -1,15 +1,39 @@
 import React, { useState } from 'react'
 import { Button, Card } from 'react-bootstrap'
+import { propTypes } from 'react-bootstrap/esm/Image';
 import { Link } from 'react-router-dom';
 import { addRssSubscription } from '../../Services/addRssSubscription';
+import { manageSubscribe, manageUnsubscribe } from '../../Services/manageSubscription';
 
 function RssSite(props) {
-    const [subscriptionMessage, setsubscriptionMessage] = useState('');
-    
+    const [subscriptionMessage, setSubscriptionMessage] = useState('');
+    const [unsubscriptionMessage, setUnsubscriptionMessage] = useState('');
     function handleSubscribe(){
-        addRssSubscription(props.url)
+        if(props.fromDiscoverlist){
+            manageSubscribe(props.rssId)
+            .then((res) => {
+                setSubscriptionMessage(res);
+            })
+            .catch((error) => {
+    
+            })
+        }
+        else {
+            addRssSubscription(props.url)
+            .then((res) => {
+                setSubscriptionMessage(res);
+            })
+            .catch((error) => {
+    
+            })
+        }
+       
+    }
+
+    function handleUnsubscribe(){
+        manageUnsubscribe(props.subscriptionId)
         .then((res) => {
-            setsubscriptionMessage(res);
+            setUnsubscriptionMessage(res);
         })
         .catch((error) => {
 
@@ -34,6 +58,15 @@ function RssSite(props) {
                     >
                         <Button variant="primary">Click to Check the feeds</Button>
                     </Link>
+                    {props.fromSubscriptionlist &&
+                    <>
+                    {!unsubscriptionMessage && 
+                    <Button className="my-2" variant="warning" onClick={() => handleUnsubscribe()}> Unsubscribe</Button>
+                    }
+                    {unsubscriptionMessage && 
+                        <span className="badge bg-warning my-2"> {unsubscriptionMessage} </span>}
+                    </>
+                    }
                     {!props.fromSubscriptionlist &&
                     <>
                     {!subscriptionMessage && 

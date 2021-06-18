@@ -31,13 +31,14 @@ function UserSubscriptions() {
             {subcriptionList.length >0 &&
                 <div className="text-center">
                    <Row xs={1} sm={1} md={2} lg={3} >
-                        {subcriptionList.map((rssSite, index) => (
+                        {subcriptionList.map((subcription, index) => (
                             <Col key={index} className="mb-4">
                                 <RssSite
-                                    title={rssSite.title}
-                                    description={rssSite.description}
-                                    imageUrl={rssSite.imageUrl}
-                                    url={rssSite.url}
+                                    title={subcription.RssSite.title}
+                                    description={subcription.RssSite.description}
+                                    imageUrl={subcription.RssSite.imageUrl}
+                                    url={subcription.RssSite.url}
+                                    subscriptionId ={subcription.id}
                                     fromSubscriptionlist = "true"
                                 >
                                 </RssSite>
