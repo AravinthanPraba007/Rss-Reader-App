@@ -11,3 +11,17 @@ export const fetchUserFeeds = (page) => {
         console.log(err);
     })
 }
+
+
+export const fetchSiteFeeds = (page, rssId) => {
+    return axiosInstance().post("/getSiteFeeds",{
+        page: page,
+        rssId: rssId
+    })
+    .then((res) => {
+        return Promise.resolve(res.data.feeds);
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+}

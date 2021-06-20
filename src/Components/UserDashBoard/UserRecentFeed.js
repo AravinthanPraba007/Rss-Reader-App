@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import RssSiteFeed from '../RssSites/RssSiteFeed';
 import { Col, Row, Spinner, Container, Button } from 'react-bootstrap';
-import { fetchUserFeeds } from '../../Services/fetchUserFeed';
+import { fetchUserFeeds } from '../../Services/fetchFeed';
 
 function UserFeed() {
     const history = useHistory();
@@ -32,23 +32,23 @@ function UserFeed() {
                         <Spinner animation="border" /><span>Fetching your feed</span>
                     </div>
                 }
-                
-                    {(!userFeeds || !userFeeds.length > 0) &&
-                        <div className="text-center">
-                            <h2 className="my-2">You have not subscribed to any of the feed</h2>
-                            <Button
-                                className="my-2"
-                                variant="success"
-                                size="lg"
-                                active onClick={() => history.push('/discover')}
-                            >
-                                Explore Feeds
-                            </Button>
-                        </div>
-                    }
-                    {(userFeeds && userFeeds.length > 0) && <div>
-                        <h3 className="text-center">Check out your Recent Feeds</h3>
-                        <Row xs={1} sm={1} md={2} lg={3} className="mt-3">
+
+                {(!userFeeds || !userFeeds.length > 0) &&
+                    <div className="text-center">
+                        <h2 className="my-2">You have not subscribed to any of the feed</h2>
+                        <Button
+                            className="my-2"
+                            variant="success"
+                            size="lg"
+                            active onClick={() => history.push('/discover')}
+                        >
+                            Explore Feed Sites and Subscribe
+                        </Button>
+                    </div>
+                }
+                {(userFeeds && userFeeds.length > 0) && <div>
+                    <h3 className="text-center">Check out your Recent Feeds</h3>
+                    <Row xs={1} sm={1} md={2} lg={3} className="mt-3">
                         {userFeeds.map((rssSiteFeed, index) => (
                             <Col key={index} className="mb-4">
                                 <RssSiteFeed
@@ -60,17 +60,18 @@ function UserFeed() {
                             </Col>
 
                         ))}
-                        </Row>
+                    </Row>
+                    <div className="text-center">
+                        <Button variant="success" size="lg" active onClick={() => history.push('/userfeeds')}>
+                            Want to explore More Feeds!!
+                        </Button>
                     </div>
-                    }
-                
+                </div>
+                }
+
             </Container>
-            <div className="text-center">
-            <Button variant="success" size="lg" active onClick={() => history.push('/userfeeds')}>
-                                    Want to explore More Feeds!!
-                                </Button>
-            </div>
-            
+
+
         </div>
     )
 }

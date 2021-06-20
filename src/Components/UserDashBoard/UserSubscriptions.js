@@ -34,6 +34,7 @@ function UserSubscriptions() {
                         {subcriptionList.map((subcription, index) => (
                             <Col key={index} className="mb-4">
                                 <RssSite
+                                    id={subcription.RssSite.id}
                                     title={subcription.RssSite.title}
                                     description={subcription.RssSite.description}
                                     imageUrl={subcription.RssSite.imageUrl}
@@ -50,7 +51,7 @@ function UserSubscriptions() {
             {!subcriptionList.length > 0 &&
                 <div className = "text-center">
                 <h2 className="my-2">You have not subscribed to any of the feed</h2>
-                <Button className="my-2" variant="success" size="lg" active onClick={() => history.push('/discover')}>Click to Explore Feeds</Button>
+                <Button className="my-2" variant="success" size="lg" active onClick={() => history.push('/discover')}>Click to Explore Feed Sites</Button>
                 </div>
             }
             </Container>

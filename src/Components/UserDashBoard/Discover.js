@@ -44,6 +44,7 @@ function Discover() {
                {rssSites.map((rssSite, index) => (
                    <Col  key={index} className="mb-4">
                     <RssSite 
+                    id={rssSite.id}
                     title={rssSite.title} 
                     description={rssSite.description} 
                     imageUrl={rssSite.imageUrl}

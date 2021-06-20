@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import RssSiteFeed from '../RssSites/RssSiteFeed';
 import { Col, Row, Spinner, Container, Button, Alert } from 'react-bootstrap';
-import { fetchUserFeeds } from '../../Services/fetchUserFeed';
+import { fetchUserFeeds } from '../../Services/fetchFeed';
 
 function UserFeeds() {
     const history = useHistory();
@@ -15,19 +15,19 @@ function UserFeeds() {
         fetchUserFeeds(page)
             .then((data) => {
                 setUserFeeds(data.rows);
-                let maxPageCount = Math.ceil((data.count)/10);
+                let maxPageCount = Math.ceil((data.count) / 10);
                 setMaximumPage(maxPageCount);
                 setFeedsLoading(false);
             })
-        
+
     }, [])
 
 
-    function handleFetchPrevFeeds(){
-        let pageNo = page-1;
+    function handleFetchPrevFeeds() {
+        let pageNo = page - 1;
         setPage(pageNo);
         setFeedsLoading(true);
-        
+
         fetchUserFeeds(pageNo)
             .then((data) => {
                 setUserFeeds(data.rows);
@@ -35,8 +35,8 @@ function UserFeeds() {
             })
     }
 
-    function handleFetchNextFeeds(){
-        let pageNo = page+1;
+    function handleFetchNextFeeds() {
+        let pageNo = page + 1;
         setPage(pageNo);
         setFeedsLoading(true);
         fetchUserFeeds(pageNo)
@@ -56,23 +56,23 @@ function UserFeeds() {
                         <Spinner animation="border" /><span>Fetching your feed</span>
                     </div>
                 }
-                
-                    {(!userFeeds || !userFeeds.length > 0) &&
-                        <div className="text-center">
-                            <h2 className="my-2">You have not subscribed to any of the feed</h2>
-                            <Button
-                                className="my-2"
-                                variant="success"
-                                size="lg"
-                                active onClick={() => history.push('/discover')}
-                            >
-                                Explore Feeds
-                            </Button>
-                        </div>
-                    }
-                    {(userFeeds && userFeeds.length > 0) && <div>
-                        <h3 className="text-center">Check out your Recent Feeds</h3>
-                        <Row xs={1} sm={1} md={2} lg={3} className="mt-3">
+
+                {(!userFeeds || !userFeeds.length > 0) &&
+                    <div className="text-center">
+                        <h2 className="my-2">You have not subscribed to any of the feed</h2>
+                        <Button
+                            className="my-2"
+                            variant="success"
+                            size="lg"
+                            active onClick={() => history.push('/discover')}
+                        >
+                            Explore Feed Sites
+                        </Button>
+                    </div>
+                }
+                {(userFeeds && userFeeds.length > 0) && <div>
+                    <h3 className="text-center">Check out your Recent Feeds</h3>
+                    <Row xs={1} sm={1} md={2} lg={3} className="mt-3">
                         {userFeeds.map((rssSiteFeed, index) => (
                             <Col key={index} className="mb-4">
                                 <RssSiteFeed
@@ -84,16 +84,19 @@ function UserFeeds() {
                             </Col>
 
                         ))}
-                        </Row>
+                    </Row>
+                    <div className="text-center my-3">
+                        <Button className="my-2" disabled={(page == 1)} variant="success" onClick={() => handleFetchPrevFeeds()}> Prev</Button>
+                        <span className="mx-3">Page :{page} / {maximumPage}</span>
+                        <Button className="my-2" disabled={(page == maximumPage)} variant="success" onClick={() => handleFetchNextFeeds()}> Next</Button>
                     </div>
-                    }
-                
+                </div>
+
+
+                }
+
             </Container>
-            <div className="text-center my-3">
-            <Button className="my-2" disabled = {(page == 1)} variant="success" onClick={() => handleFetchPrevFeeds()}> Prev</Button>
-            <span className="mx-3">Page :{page} / {maximumPage}</span>
-            <Button className="my-2" disabled = {(page == maximumPage)} variant="success" onClick={() => handleFetchNextFeeds()}> Next</Button>
-            </div>
+
         </div>
     )
 }

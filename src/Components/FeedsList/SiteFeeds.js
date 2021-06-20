@@ -2,23 +2,48 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import RssSiteFeed from '../RssSites/RssSiteFeed';
 import { Col, Row, Spinner, Container, Button, Alert } from 'react-bootstrap';
-import { fetchUserFeeds } from '../../Services/fetchUserFeed';
+import { fetchSiteFeeds } from '../../Services/fetchFeed';
+import {useLocation} from "react-router-dom";
+import { manageSubscribe, manageUnsubscribe } from '../../Services/manageSubscription';
 
-function SiteFeeds() {
+
+function SiteFeeds(props) {
     const history = useHistory();
     const [userFeeds, setUserFeeds] = useState([]);
     const [feedsloading, setFeedsLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [maximumPage, setMaximumPage] = useState(1);
+    const [rssId, setRssId] = useState();
+    const [rssTitle, setRssTitle] = useState();
+    const [subscriptionMessage, setSubscriptionMessage] = useState('');
+    const [fromSubscriptionlist, setFromSubscriptionlist] = useState(false);
+    const location = useLocation();
+    let goodToProceed = false;
+    
+
     useEffect(() => {
+        let isSubscribed = true
+        if((location.state && location.state.rssId && location.state.rssTitle)) {
+            setRssId(location.state.rssId);
+            setRssTitle(location.state.rssTitle);
+            setFromSubscriptionlist(location.state.fromSubscriptionlist);
+            goodToProceed = true;
+            console.log(location.state);
+        }
+        if(!goodToProceed){
+            history.push("/home");
+        }
         setFeedsLoading(true);
-        fetchUserFeeds(page)
-            .then((data) => {
+        fetchSiteFeeds(page, location.state.rssId)
+        .then((data) => {
+            if (isSubscribed) {
                 setUserFeeds(data.rows);
                 let maxPageCount = Math.ceil((data.count)/10);
                 setMaximumPage(maxPageCount);
                 setFeedsLoading(false);
-            })
+            }
+        })
+        return () =>isSubscribed = false
         
     }, [])
 
@@ -28,7 +53,7 @@ function SiteFeeds() {
         setPage(pageNo);
         setFeedsLoading(true);
         
-        fetchUserFeeds(pageNo)
+        fetchSiteFeeds(pageNo, rssId)
             .then((data) => {
                 setUserFeeds(data.rows);
                 setFeedsLoading(false);
@@ -39,11 +64,24 @@ function SiteFeeds() {
         let pageNo = page+1;
         setPage(pageNo);
         setFeedsLoading(true);
-        fetchUserFeeds(pageNo)
+        fetchSiteFeeds(pageNo, rssId)
             .then((data) => {
                 setUserFeeds(data.rows);
                 setFeedsLoading(false);
             })
+    }
+
+    function handleSubscribe() {
+        
+            manageSubscribe(rssId)
+                .then((res) => {
+                    setSubscriptionMessage(res);
+                })
+                .catch((error) => {
+
+                })
+
+
     }
 
     return (
@@ -52,26 +90,23 @@ function SiteFeeds() {
                 {/* <h3 className="text-center">Check out your Recent Feeds</h3> */}
                 {feedsloading &&
                     <div className="text-center mt-5">
-                        <h3 className="text-center">Check out your Recent Feeds</h3>
-                        <Spinner animation="border" /><span>Fetching your feed</span>
+                        <h3 className="text-center">Check out {rssTitle} Feeds</h3>
+                        <Spinner animation="border" /><span>Fetching the feed</span>
                     </div>
                 }
                 
-                    {(!userFeeds || !userFeeds.length > 0) &&
-                        <div className="text-center">
-                            <h2 className="my-2">You have not subscribed to any of the feed</h2>
-                            <Button
-                                className="my-2"
-                                variant="success"
-                                size="lg"
-                                active onClick={() => history.push('/discover')}
-                            >
-                                Explore Feeds
-                            </Button>
+                    
+                    {(userFeeds && userFeeds.length > 0) && <div>
+                        <h3 className="text-center">Check out {rssTitle} Feeds</h3>
+                        {!fromSubscriptionlist &&
+                        <div className="m-3 text-center">
+                            {!subscriptionMessage &&
+                                <Button className="m-2" variant="success" onClick={() => handleSubscribe()}> Subscribe</Button>
+                            }
+                            {subscriptionMessage &&
+                                <span className="badge bg-success my-2"> {subscriptionMessage} </span>}
                         </div>
                     }
-                    {(userFeeds && userFeeds.length > 0) && <div>
-                        <h3 className="text-center">Check out your Recent Feeds</h3>
                         <Row xs={1} sm={1} md={2} lg={3} className="mt-3">
                         {userFeeds.map((rssSiteFeed, index) => (
                             <Col key={index} className="mb-4">
@@ -94,6 +129,7 @@ function SiteFeeds() {
             <span className="mx-3">Page :{page} / {maximumPage}</span>
             <Button className="my-2" disabled = {(page == maximumPage)} variant="success" onClick={() => handleFetchNextFeeds()}> Next</Button>
             </div>
+            
         </div>
     )
 }

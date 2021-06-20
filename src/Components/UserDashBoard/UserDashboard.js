@@ -17,12 +17,12 @@ function UserDashboard() {
                         <Row  xs={1} sm={1} md={1} lg={2} className="justify-content-md-center">
                             <Col className="mb-3">
                                 <Button variant="info" size="lg" active onClick={() => history.push('/subscriptions')}>
-                                    Manage your Rss Site Subscription!!
+                                    Manage your Feed Sites Subscription!!
                                 </Button>
                             </Col>
                             <Col className="mb-3">
                                 <Button variant="success" size="lg" active onClick={() => history.push('/discover')}>
-                                    Want to explore Rss Sites!!
+                                    Want to explore Feed Sites!!
                                 </Button>
                             </Col>
                         </Row>
