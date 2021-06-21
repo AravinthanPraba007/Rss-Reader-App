@@ -17,3 +17,20 @@ export const signup = ({name, email, password}) => {
     })
     
 }
+
+
+export const googleSignup = (token) => {
+
+    return axiosInstance().post("/googleSignup",{
+        token: token
+    })
+    .then((res) => {
+        localStorage.token = res.data.token;
+        return Promise.resolve(res);
+    })
+    .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
+    })
+    
+}

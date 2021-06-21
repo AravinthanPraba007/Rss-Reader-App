@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { Alert, Button, Form, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { login } from '../../Services/performLogin';
+import { login, googleLogin } from '../../Services/performLogin';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext';
+import GoogleLogin from 'react-google-login';
 
 function Login() {
     const history = useHistory();
@@ -17,13 +18,12 @@ function Login() {
         const value = event.target.value;
         setLoginInput({ ...loginInput, [key]: value });
     }
-
     function handleValidation() {
         let validationPassed = true;
         let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if (loginInput.email) {
             let isEmailValid = (loginInput.email).match(mailformat);
-            if(!isEmailValid){
+            if (!isEmailValid) {
                 setErrorMessage("Provide vaild email id");
                 validationPassed = false;
             }
@@ -62,36 +62,71 @@ function Login() {
 
     }
 
+    function handleSuccessGoogleLogin(response) {
+        console.log(response);
+        console.log(response.tokenObj.access_token);
+        setLoginTriggered(true);
+            setErrorMessage('');
+            googleLogin(response.tokenId)
+                .then((res) => {
+                    console.log(res);
+                    setUserAuthenticated(true);
+                    setLoginTriggered(false);
+                    history.push('/home');
+
+                })
+                .catch((err) => {
+                    setLoginTriggered(false);
+                    setErrorMessage(err.data.message);
+                })
+
+    }
+
+    function handleErrorGoogleLogin(response) {
+        console.log(response);
+        setErrorMessage("Google Login Failed");
+    }
+
     return (
         <div className="mt-5">
             <Container fluid="sm">
-            <h3>Login</h3>
-            {errorMessage &&
-                <Alert variant="warning">
-                    {errorMessage}
-                </Alert>
-            }
-            <Form noValidate onSubmit={handleLoginSubmit}>
-                <Form.Group className="mb-3" controlId="email">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" required placeholder="Enter email" onChange={handleInputChange} value={loginInput.email} />
-                </Form.Group>
+                <h3>Login</h3>
+                {errorMessage &&
+                    <Alert variant="warning">
+                        {errorMessage}
+                    </Alert>
+                }
+                <Form noValidate onSubmit={handleLoginSubmit}>
+                    <Form.Group className="mb-3" controlId="email">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" required placeholder="Enter email" onChange={handleInputChange} value={loginInput.email} />
+                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" required placeholder="Password" onChange={handleInputChange} value={loginInput.password} />
-                </Form.Group>
+                    <Form.Group className="mb-3" controlId="password">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" required placeholder="Password" onChange={handleInputChange} value={loginInput.password} />
+                    </Form.Group>
 
-                <Button
-                    variant="primary"
-                    type="submit"
-                    disabled={loginTriggered}
-                >
-                    Login
-                </Button>
-                <p>Need an account <Link to="/signup">Register</Link> </p>
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        disabled={loginTriggered}
+                    >
+                        Login
+                    </Button>
+                    <p>Need an account <Link to="/signup">Register</Link> </p>
+                    
 
-            </Form>
+                </Form>
+                <div className="m-3 text-center">
+                    <GoogleLogin
+                        clientId={process.env.GOOGLE_CLIENT_ID}
+                        buttonText="Log in with Google"
+                        onSuccess={handleSuccessGoogleLogin}
+                        onFailure={handleErrorGoogleLogin}
+                        cookiePolicy={'single_host_origin'}
+                    />
+                    </div>
             </Container>
         </div>
     )

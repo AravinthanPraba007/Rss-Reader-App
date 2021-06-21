@@ -17,3 +17,21 @@ export const login = ({email, password}) => {
     })
     
 }
+
+
+export const googleLogin = (token) => {
+
+    return axiosInstance().post("/googleLogin",{
+        token: token
+    })
+    .then((res) => {
+        console.log(res);
+        localStorage.token = res.data.token;
+        return Promise.resolve(res);
+    })
+    .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
+    })
+    
+}

@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { Alert, Button, Form, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { signup } from '../../Services/performSignup';
+import { signup, googleSignup } from '../../Services/performSignup';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext';
+import GoogleLogin from 'react-google-login';
 
 function Signup() {
     const history = useHistory();
@@ -62,6 +63,31 @@ function Signup() {
         }
     }
 
+    function handleSuccessGoogleLogin(response) {
+        console.log(response);
+        console.log(response.tokenObj.access_token);
+        setSignupTriggered(true);
+            setErrorMessage('');
+            googleSignup(response.tokenId)
+                .then((res) => {
+                    console.log(res);
+                    setUserAuthenticated(true);
+                    setSignupTriggered(false);
+                    history.push('/home');
+
+                })
+                .catch((err) => {
+                    setSignupTriggered(false);
+                    setErrorMessage(err.data.message);
+                })
+
+    }
+
+    function handleErrorGoogleLogin(response) {
+        console.log(response);
+        setErrorMessage("Google Login Failed");
+    }
+
     return (
         <div className="mt-5">
         <Container fluid="sm">
@@ -96,6 +122,15 @@ function Signup() {
                 </Button>
                 <p>Already have an account? <Link to="/login">Login</Link></p>
             </Form>
+            <div className="m-3 text-center">
+                    <GoogleLogin
+                        clientId={process.env.GOOGLE_CLIENT_ID}
+                        buttonText="Sign up with Google"
+                        onSuccess={handleSuccessGoogleLogin}
+                        onFailure={handleErrorGoogleLogin}
+                        cookiePolicy={'single_host_origin'}
+                    />
+                    </div>
             </Container>
         </div>
     )
