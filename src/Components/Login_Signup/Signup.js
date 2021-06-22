@@ -57,7 +57,7 @@ function Signup() {
                     history.push('/home');
                 })
                 .catch((err) => {
-                    setSignupTriggered(true);
+                    setSignupTriggered(false);
                     setErrorMessage(err.data.message);
                 })
         }
