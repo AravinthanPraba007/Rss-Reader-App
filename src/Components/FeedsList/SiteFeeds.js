@@ -6,7 +6,6 @@ import { fetchSiteFeeds } from '../../Services/fetchFeed';
 import {useLocation} from "react-router-dom";
 import { manageSubscribe, manageUnsubscribe } from '../../Services/manageSubscription';
 
-
 function SiteFeeds(props) {
     const history = useHistory();
     const [userFeeds, setUserFeeds] = useState([]);
@@ -20,7 +19,6 @@ function SiteFeeds(props) {
     const location = useLocation();
     let goodToProceed = false;
     
-
     useEffect(() => {
         let isSubscribed = true
         if((location.state && location.state.rssId && location.state.rssTitle)) {
@@ -44,15 +42,12 @@ function SiteFeeds(props) {
             }
         })
         return () =>isSubscribed = false
-        
     }, [])
-
 
     function handleFetchPrevFeeds(){
         let pageNo = page-1;
         setPage(pageNo);
         setFeedsLoading(true);
-        
         fetchSiteFeeds(pageNo, rssId)
             .then((data) => {
                 setUserFeeds(data.rows);
@@ -80,8 +75,6 @@ function SiteFeeds(props) {
                 .catch((error) => {
 
                 })
-
-
     }
 
     return (

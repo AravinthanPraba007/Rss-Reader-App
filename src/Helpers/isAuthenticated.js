@@ -1,5 +1,5 @@
 export default () => {
-    if(localStorage.token) {
+    if (localStorage.token) {
         return true;
     }
     else {
