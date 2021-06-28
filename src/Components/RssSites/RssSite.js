@@ -52,11 +52,7 @@ function RssSite(props) {
                     {((props.fromSubscriptionlist) || (props.fromDiscoverlist)) ?
                         <Link to={{
                             pathname: "/sitefeeds",
-                            state: {
-                                rssId: props.id,
-                                rssTitle: props.title,
-                                fromSubscriptionlist : props.fromSubscriptionlist
-                            },
+                            search: "?" + new URLSearchParams({ rssId: props.id }).toString()
                         }}
                         >
                             <Button variant="primary">Click to Check the feeds</Button>

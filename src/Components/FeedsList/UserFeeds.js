@@ -17,11 +17,11 @@ function UserFeeds() {
     useEffect(() => {
         console.log("Query param -> page : " + params.get('page'));
         let pageNoParams = params.get('page');
-        if(pageNoParams) {
-            setPage(pageNoParams);
+        if (pageNoParams) {
+            setPage(parseInt(pageNoParams));
             triggerUserFeedsFetch(pageNoParams);
         }
-        else{
+        else {
             triggerUserFeedsFetch(page);
         }
 
@@ -29,7 +29,7 @@ function UserFeeds() {
 
 
     function triggerUserFeedsFetch(pageNo) {
-        history.push({search: "?" + new URLSearchParams({page: pageNo}).toString()})
+        history.push({ search: "?" + new URLSearchParams({ page: pageNo }).toString() })
         setFeedsLoading(true);
         fetchUserFeeds(pageNo)
             .then((data) => {
