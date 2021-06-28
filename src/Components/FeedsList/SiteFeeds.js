@@ -31,7 +31,8 @@ function SiteFeeds(props) {
         if(!goodToProceed){
             history.push("/home");
         }
-        setFeedsLoading(true);
+        else {
+            setFeedsLoading(true);
         fetchSiteFeeds(page, location.state.rssId)
         .then((data) => {
             if (isSubscribed) {
@@ -42,6 +43,7 @@ function SiteFeeds(props) {
             }
         })
         return () =>isSubscribed = false
+        }
     }, [])
 
     function handleFetchPrevFeeds(){

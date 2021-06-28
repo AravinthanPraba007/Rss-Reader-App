@@ -12,6 +12,7 @@ import Feed from './Components/UserDashBoard/Feed';
 import { AuthProvider } from './Contexts/AuthContext';
 import UserFeeds from './Components/FeedsList/UserFeeds';
 import SiteFeeds from './Components/FeedsList/SiteFeeds';
+import SearchFeed from './Components/SearchFeed/SearchFeed';
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                             <ProtectedRoute path="/feed" component={Feed} />
                             <ProtectedRoute path="/userfeeds" component={UserFeeds} />
                             <ProtectedRoute path="/sitefeeds" component={SiteFeeds} />
+                            <ProtectedRoute path="/searchfeed" component={SearchFeed} />
                         </Switch>
                     </div>
                 </AuthProvider>

@@ -27,6 +27,7 @@ function Header() {
                     {userAuthenticated && 
                     <Nav className="me-auto">
                     <Nav.Link onClick={() => history.push('/home')} >Home</Nav.Link>
+                    <Nav.Link onClick={() => history.push('/searchfeed')} >Search</Nav.Link>
                     <Nav.Link onClick={() => history.push('/discover')}>Discover</Nav.Link>
                     <Nav.Link onClick={() => history.push('/subscriptions')}>Subscriptions</Nav.Link>
                     <Nav.Link onClick={() => logout(history, setUserAuthenticated)}>Logout</Nav.Link>
