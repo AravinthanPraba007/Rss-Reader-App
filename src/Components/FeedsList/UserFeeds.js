@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import RssSiteFeed from '../RssSites/RssSiteFeed';
 import { Col, Row, Spinner, Container, Button, Alert } from 'react-bootstrap';
 import { fetchUserFeeds } from '../../Services/fetchFeed';
@@ -10,40 +10,49 @@ function UserFeeds() {
     const [feedsloading, setFeedsLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [maximumPage, setMaximumPage] = useState(1);
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+
+
     useEffect(() => {
+        console.log("Query param -> page : " + params.get('page'));
+        let pageNoParams = params.get('page');
+        if(pageNoParams) {
+            setPage(pageNoParams);
+            triggerUserFeedsFetch(pageNoParams);
+        }
+        else{
+            triggerUserFeedsFetch(page);
+        }
+
+    }, [])
+
+
+    function triggerUserFeedsFetch(pageNo) {
+        history.push({search: "?" + new URLSearchParams({page: pageNo}).toString()})
         setFeedsLoading(true);
-        fetchUserFeeds(page)
+        fetchUserFeeds(pageNo)
             .then((data) => {
                 setUserFeeds(data.rows);
                 let maxPageCount = Math.ceil((data.count) / 10);
                 setMaximumPage(maxPageCount);
                 setFeedsLoading(false);
             })
-
-    }, [])
-
+            .catch((err) => {
+                setFeedsLoading(false);
+            })
+    }
 
     function handleFetchPrevFeeds() {
         let pageNo = page - 1;
         setPage(pageNo);
-        setFeedsLoading(true);
-
-        fetchUserFeeds(pageNo)
-            .then((data) => {
-                setUserFeeds(data.rows);
-                setFeedsLoading(false);
-            })
+        triggerUserFeedsFetch(pageNo);
     }
 
     function handleFetchNextFeeds() {
         let pageNo = page + 1;
         setPage(pageNo);
-        setFeedsLoading(true);
-        fetchUserFeeds(pageNo)
-            .then((data) => {
-                setUserFeeds(data.rows);
-                setFeedsLoading(false);
-            })
+        triggerUserFeedsFetch(pageNo);
     }
 
     return (
