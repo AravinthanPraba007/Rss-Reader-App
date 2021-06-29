@@ -59,7 +59,7 @@ function RssSite(props) {
 
                         :
                         <Link to={{
-                            pathname: "/feed",
+                            pathname: "/feeds",
                             state: {
                                 rssFeedUrl: props.url
                             },

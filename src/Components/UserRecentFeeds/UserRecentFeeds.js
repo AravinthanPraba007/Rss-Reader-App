@@ -1,59 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom';
-import RssSiteFeed from '../RssSites/RssSiteFeed';
-import { Col, Row, Spinner, Container, Button, Alert } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import RssSiteFeed from '../RssSiteFeed/RssSiteFeed';
+import { Col, Row, Spinner, Container, Button } from 'react-bootstrap';
 import { fetchUserFeeds } from '../../Services/feedService';
 
-function UserFeeds() {
+function UserRecentFeeds() {
     const history = useHistory();
     const [userFeeds, setUserFeeds] = useState([]);
     const [feedsloading, setFeedsLoading] = useState(true);
-    const [page, setPage] = useState(1);
-    const [maximumPage, setMaximumPage] = useState(1);
-    const location = useLocation();
-    const params = new URLSearchParams(location.search);
-
-
+    const page = 1;
     useEffect(() => {
-        console.log("Query param -> page : " + params.get('page'));
-        let pageNoParams = params.get('page');
-        if (pageNoParams) {
-            setPage(parseInt(pageNoParams));
-            triggerUserFeedsFetch(pageNoParams);
-        }
-        else {
-            triggerUserFeedsFetch(page);
-        }
-
-    }, [])
-
-
-    function triggerUserFeedsFetch(pageNo) {
-        history.push({ search: "?" + new URLSearchParams({ page: pageNo }).toString() })
+        let isSubscribed = true
         setFeedsLoading(true);
-        fetchUserFeeds(pageNo)
+        fetchUserFeeds(page)
             .then((data) => {
-                setUserFeeds(data.rows);
-                let maxPageCount = Math.ceil((data.count) / 10);
-                setMaximumPage(maxPageCount);
+                if (isSubscribed) {
+                    setUserFeeds(data.rows);
+                }
                 setFeedsLoading(false);
             })
-            .catch((err) => {
-                setFeedsLoading(false);
-            })
-    }
-
-    function handleFetchPrevFeeds() {
-        let pageNo = page - 1;
-        setPage(pageNo);
-        triggerUserFeedsFetch(pageNo);
-    }
-
-    function handleFetchNextFeeds() {
-        let pageNo = page + 1;
-        setPage(pageNo);
-        triggerUserFeedsFetch(pageNo);
-    }
+        return () => isSubscribed = false
+    }, [])
 
     return (
         <div className="mt-4">
@@ -75,7 +42,7 @@ function UserFeeds() {
                             size="lg"
                             active onClick={() => history.push('/discover')}
                         >
-                            Explore Feed Sites
+                            Explore Feed Sites and Subscribe
                         </Button>
                     </div>
                 }
@@ -94,20 +61,19 @@ function UserFeeds() {
 
                         ))}
                     </Row>
-                    <div className="text-center my-3">
-                        <Button className="my-2" disabled={(page == 1)} variant="success" onClick={() => handleFetchPrevFeeds()}> Prev</Button>
-                        <span className="mx-3">Page :{page} / {maximumPage}</span>
-                        <Button className="my-2" disabled={(page == maximumPage)} variant="success" onClick={() => handleFetchNextFeeds()}> Next</Button>
+                    <div className="text-center">
+                        <Button variant="success" size="lg" active onClick={() => history.push('/userfeeds')}>
+                            Want to explore More Feeds!!
+                        </Button>
                     </div>
                 </div>
-
-
                 }
 
             </Container>
+
 
         </div>
     )
 }
 
-export default UserFeeds
+export default UserRecentFeeds

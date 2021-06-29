@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import RssSiteFeed from '../RssSites/RssSiteFeed';
+import RssSiteFeed from '../RssSiteFeed/RssSiteFeed';
 import { Col, Row, Spinner, Container, Button, Alert } from 'react-bootstrap';
 import { fetchSiteFeeds } from '../../Services/feedService';
 import { useLocation } from "react-router-dom";

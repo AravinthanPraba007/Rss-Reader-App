@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Alert, Button, Col, Form, Row, Spinner, Container, Jumbotron } from 'react-bootstrap'
 import { useHistory, useLocation } from 'react-router';
 import { searchFeeds } from '../../Services/feedService';
-import RssSiteFeed from '../RssSites/RssSiteFeed';
+import RssSiteFeed from '../RssSiteFeed/RssSiteFeed';
 
 function SearchFeed(props) {
 

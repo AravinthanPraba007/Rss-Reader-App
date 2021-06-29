@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import RssSiteFeed from '../RssSites/RssSiteFeed';
+import RssSiteFeed from '../RssSiteFeed/RssSiteFeed';
 import {useLocation} from "react-router-dom";
 import { fetchSiteFeedsByRssUrl } from '../../Services/feedService';
 import { Col, Row, Spinner, Container } from 'react-bootstrap';
 
-function Feed() {
+function Feeds() {
     const history = useHistory();
     const [rssSiteFeeds, setRssSiteFeeds] = useState([]);
     const [feedsloading, setFeedsLoading] = useState(true);
@@ -56,4 +56,4 @@ function Feed() {
     )
 }
 
-export default Feed
+export default Feeds

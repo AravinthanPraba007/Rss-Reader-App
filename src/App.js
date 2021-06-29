@@ -1,17 +1,17 @@
 import React from 'react';
 import HomePage from './Components/HomePage/HomePage';
 import { BrowserRouter, Route, Router, Switch } from 'react-router-dom';
-import Login from './Components/Login_Signup/Login';
-import Signup from './Components/Login_Signup/Signup';
-import Header from './Components/HomePage/Header';
+import Login from './Components/Login/Login';
+import Signup from './Components/Signup/Signup';
+import Header from './Components/Header/Header';
 import UserDashboard from './Components/UserDashBoard/UserDashboard';
 import ProtectedRoute from './Helpers/ProtectedRoute';
-import Discover from './Components/UserDashBoard/Discover';
-import UserSubscriptions from './Components/UserDashBoard/UserSubscriptions';
-import Feed from './Components/UserDashBoard/Feed';
+import DiscoverSites from './Components/DiscoverSites/Discover';
+import UserSubscriptions from './Components/UserSubscriptions/UserSubscriptions';
+import Feeds from './Components/SiteUrlFeeds/Feeds';
 import { AuthProvider } from './Contexts/AuthContext';
-import UserFeeds from './Components/FeedsList/UserFeeds';
-import SiteFeeds from './Components/FeedsList/SiteFeeds';
+import UserFeeds from './Components/UserFeedsList/UserFeeds';
+import SiteFeeds from './Components/SiteFeedsList/SiteFeeds';
 import SearchFeed from './Components/SearchFeed/SearchFeed';
 
 function App() {
@@ -26,9 +26,9 @@ function App() {
                             <Route path="/login" component={Login} />
                             <Route path="/signup" component={Signup} />
                             <ProtectedRoute path="/home" component={UserDashboard} exact />
-                            <ProtectedRoute path="/discover" component={Discover} />
+                            <ProtectedRoute path="/discover" component={DiscoverSites} />
                             <ProtectedRoute path="/subscriptions" component={UserSubscriptions} />
-                            <ProtectedRoute path="/feed" component={Feed} />
+                            <ProtectedRoute path="/feeds" component={Feeds} />
                             <ProtectedRoute path="/userfeeds" component={UserFeeds} />
                             <ProtectedRoute path="/sitefeeds" component={SiteFeeds} />
                             <ProtectedRoute path="/searchfeed" component={SearchFeed} />

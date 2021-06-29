@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Jumbotron, Row, Spinner, Container } from 'react-bootstrap'
-import RssSite from '../RssSites/RssSite'
+import RssSite from '../RssSite/RssSite'
 import { useHistory } from 'react-router-dom';
 import { fetchAvailableRssSites } from '../../Services/rssSiteService';
-import SearchRssSite from './SearchRssSite';
+import SearchRssSite from '../SearchRssSite/SearchRssSite';
 
-function Discover() {
+function DiscoverSites() {
     const history = useHistory();
     const [rssSites, setRssSites] = useState([]);
     const [rssSitesloading, setRssSitesLoading] = useState(true);
@@ -63,4 +63,4 @@ function Discover() {
     )
 }
 
-export default Discover
+export default DiscoverSites

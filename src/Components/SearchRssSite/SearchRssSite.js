@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Alert, Button, Col, Form, Row, Spinner, Container } from 'react-bootstrap'
 import { useHistory } from 'react-router';
 import { searchRssSiteByUrl } from '../../Services/rssSiteService';
-import RssSite from '../RssSites/RssSite';
+import RssSite from '../RssSite/RssSite';
 
 function SearchRssSite() {
 
