@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Alert, Button, Col, Form, Row, Spinner, Container } from 'react-bootstrap'
 import { useHistory } from 'react-router';
-import { searchRssSite } from '../../Services/searchRssSite';
+import { searchRssSiteByUrl } from '../../Services/rssSiteService';
 import RssSite from '../RssSites/RssSite';
 
-function    SearchRssSite() {
+function SearchRssSite() {
 
     const history = useHistory();
     const initalSearchInput = { rssFeedUrl: '' };
@@ -49,7 +49,7 @@ function    SearchRssSite() {
             setSearchTriggered(true);
             setErrorMessage('');
             setRssSite({isloaded: false});
-            searchRssSite(searchInput.rssFeedUrl)
+            searchRssSiteByUrl(searchInput.rssFeedUrl)
                 .then((res) => {
                     console.log(res);
                     setSearchTriggered(false);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import RssSiteFeed from '../RssSites/RssSiteFeed';
 import {useLocation} from "react-router-dom";
-import { fetchRssSiteFeeds } from '../../Services/fetchRssSiteFeed';
+import { fetchSiteFeedsByRssUrl } from '../../Services/feedService';
 import { Col, Row, Spinner, Container } from 'react-bootstrap';
 
 function Feed() {
@@ -20,7 +20,7 @@ function Feed() {
             history.push("/home");
         }
         setFeedsLoading(true);
-        fetchRssSiteFeeds(rssFeedUrl)
+        fetchSiteFeedsByRssUrl(rssFeedUrl)
         .then((data) => {
             if (isSubscribed) {
             setRssSiteFeeds(data);

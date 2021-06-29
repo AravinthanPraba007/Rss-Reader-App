@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { propTypes } from 'react-bootstrap/esm/Image';
 import { Link } from 'react-router-dom';
-import { addRssSubscription } from '../../Services/addRssSubscription';
-import { manageSubscribe, manageUnsubscribe } from '../../Services/manageSubscription';
+import { manageSubscribe, manageUnsubscribe,subscribeByRssUrl } from '../../Services/subscriptionService';
 
 function RssSite(props) {
     const [subscriptionMessage, setSubscriptionMessage] = useState('');
@@ -19,7 +18,7 @@ function RssSite(props) {
                 })
         }
         else {
-            addRssSubscription(props.url)
+            subscribeByRssUrl(props.url)
                 .then((res) => {
                     setSubscriptionMessage(res);
                 })

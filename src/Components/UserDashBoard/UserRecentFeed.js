@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import RssSiteFeed from '../RssSites/RssSiteFeed';
 import { Col, Row, Spinner, Container, Button } from 'react-bootstrap';
-import { fetchUserFeeds } from '../../Services/fetchFeed';
+import { fetchUserFeeds } from '../../Services/feedService';
 
 function UserFeed() {
     const history = useHistory();

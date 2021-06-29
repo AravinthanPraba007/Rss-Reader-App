@@ -25,3 +25,28 @@ export const manageSubscribe = (rssId) => {
             console.log(err);
         })
 }
+
+export const subscribeByRssUrl = (rssFeedUrl) => {
+    return axiosInstance().post("/addRssSubscription", {
+        rssFeedUrl: rssFeedUrl
+    })
+        .then((res) => {
+            return Promise.resolve(res.data.message);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+
+export const fetchUserSubscription = () => {
+    return axiosInstance().get("/getRssSubscriptionList")
+        .then((res) => {
+            let subcriptionList = [];
+            subcriptionList = res.data.subcriptionList;
+            return Promise.resolve(subcriptionList);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+

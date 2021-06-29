@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Jumbotron, Row, Spinner, Container } from 'react-bootstrap'
 import RssSite from '../RssSites/RssSite'
 import { useHistory } from 'react-router-dom';
-import { fetchRssSites } from '../../Services/fetchRssSite';
+import { fetchAvailableRssSites } from '../../Services/rssSiteService';
 import SearchRssSite from './SearchRssSite';
 
 function Discover() {
@@ -11,7 +11,7 @@ function Discover() {
     const [rssSitesloading, setRssSitesLoading] = useState(true);
     useEffect(() => {
         setRssSitesLoading(true);
-        fetchRssSites()
+        fetchAvailableRssSites()
         .then((data) => {
             setRssSites(data);
             setRssSitesLoading(false);

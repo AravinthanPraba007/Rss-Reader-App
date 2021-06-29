@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Alert, Button, Form, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { signup, googleSignup } from '../../Services/performSignup';
+import { signup, googleSignup } from '../../Services/signupService';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext';
 import GoogleLogin from 'react-google-login';
