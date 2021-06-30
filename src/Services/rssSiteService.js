@@ -8,7 +8,7 @@ export const fetchRssSiteDetails = (rssId) => {
             return Promise.resolve(res.data.rssSite);
         })
         .catch((err) => {
-            console.log(err);
+            return Promise.reject(err);
         })
 }
 
@@ -19,7 +19,7 @@ export const fetchAvailableRssSites = () => {
             return Promise.resolve(res.data.rssSiteList);
         })
         .catch((err) => {
-            console.log(err);
+            return Promise.reject(err);
         })
 }
 

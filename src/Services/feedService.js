@@ -8,7 +8,7 @@ export const fetchUserFeeds = (page) => {
             return Promise.resolve(res.data.feeds);
         })
         .catch((err) => {
-            console.log(err);
+            return Promise.reject(err);
         })
 }
 
@@ -21,7 +21,7 @@ export const fetchSiteFeeds = (page, rssId) => {
             return Promise.resolve(res.data.feeds);
         })
         .catch((err) => {
-            console.log(err);
+            return Promise.reject(err);
         })
 }
 

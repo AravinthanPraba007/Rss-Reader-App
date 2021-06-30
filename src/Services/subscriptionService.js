@@ -9,7 +9,7 @@ export const manageUnsubscribe = (subscriptionId) => {
             return Promise.resolve(res.data.message);
         })
         .catch((err) => {
-            console.log(err);
+            return Promise.reject(err);
         })
 }
 
@@ -22,7 +22,7 @@ export const manageSubscribe = (rssId) => {
             return Promise.resolve(res.data.message);
         })
         .catch((err) => {
-            console.log(err);
+            return Promise.reject(err);
         })
 }
 
@@ -34,7 +34,7 @@ export const subscribeByRssUrl = (rssFeedUrl) => {
             return Promise.resolve(res.data.message);
         })
         .catch((err) => {
-            console.log(err);
+            return Promise.reject(err);
         })
 }
 
@@ -46,7 +46,7 @@ export const fetchUserSubscription = () => {
             return Promise.resolve(subcriptionList);
         })
         .catch((err) => {
-            console.log(err);
+            return Promise.reject(err);
         })
 }
 
