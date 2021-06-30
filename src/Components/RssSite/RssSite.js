@@ -60,9 +60,7 @@ function RssSite(props) {
                         :
                         <Link to={{
                             pathname: "/feeds",
-                            state: {
-                                rssFeedUrl: props.url
-                            },
+                            search: "?" + new URLSearchParams({ rssSiteUrl: props.url }).toString(),
                         }}
                         >
                             <Button variant="primary">Click to Check the feeds</Button>

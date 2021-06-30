@@ -33,7 +33,7 @@ export const fetchSiteFeedsByRssUrl = (rssFeedUrl) => {
             return Promise.resolve(res.data.rssSiteFeeds);
         })
         .catch((err) => {
-            console.log(err);
+            return Promise.reject(err);
         })
 }
 

@@ -9,23 +9,34 @@ function Feeds() {
     const history = useHistory();
     const [rssSiteFeeds, setRssSiteFeeds] = useState([]);
     const [feedsloading, setFeedsLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('');
     const location = useLocation();
-    let rssFeedUrl;
-    if(location.state && location.state.rssFeedUrl) {
-        rssFeedUrl = location.state.rssFeedUrl;
+    const params = new URLSearchParams(location.search);
+    let rssSiteUrlparams = params.get('rssSiteUrl');
+    let rssSiteUrl;
+    if(rssSiteUrlparams) {
+        rssSiteUrl = rssSiteUrlparams;
     }
+    
     useEffect(() => {
         let isSubscribed = true
-        if(!rssFeedUrl){
+        if(!rssSiteUrl){
+            isSubscribed = false;
             history.push("/home");
         }
+        setErrorMessage('');
         setFeedsLoading(true);
-        fetchSiteFeedsByRssUrl(rssFeedUrl)
+        fetchSiteFeedsByRssUrl(rssSiteUrl)
         .then((data) => {
             if (isSubscribed) {
             setRssSiteFeeds(data);
-            }
             setFeedsLoading(false);
+            }
+            
+        })
+        .catch((error) => {
+           setErrorMessage("Something went wrong");
+           setFeedsLoading(false);
         })
         return () =>isSubscribed = false
     }, [])
@@ -37,6 +48,7 @@ function Feeds() {
                     <Spinner animation="border" /><span>Fetching your feed</span>
                     </div>
             }
+            {errorMessage && <h4 className="text-center">{errorMessage}</h4>}
             <Row xs={1} sm={1} md={2} lg={3} >
         {rssSiteFeeds &&             
             rssSiteFeeds.map((rssSiteFeed, index) => (
